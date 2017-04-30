@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using hostinpanda.clientlibrary;
 using hostinpanda.clientlibrary.Transports.Hosts;
@@ -14,6 +15,8 @@ namespace hostinpanda.serverlibrary.Managers
 
         public ReturnContainer<List<HostListingResponseItem>> GetHostListing(int userID)
         {
+            var hosts = Wrapper.DatabaseLayer.Hosts.Where(a => a.UserID == userID).ToList();
+
             return new ReturnContainer<List<HostListingResponseItem>>(null);
         }
     }

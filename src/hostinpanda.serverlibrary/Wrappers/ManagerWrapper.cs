@@ -1,7 +1,9 @@
-﻿namespace hostinpanda.serverlibrary.Wrappers
+﻿using hostinpanda.serverlibrary.DAL;
+
+namespace hostinpanda.serverlibrary.Wrappers
 {
     public class ManagerWrapper
     {
-        public string DatabaseConnectionString { get; set; }
+        public BaseDAL DatabaseLayer { get; set; }
     }
 }
