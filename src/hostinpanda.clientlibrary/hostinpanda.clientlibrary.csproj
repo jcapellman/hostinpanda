@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="System.Runtime.Serialization.Primitives">
-      <HintPath>..\..\..\..\Users\jcape\.nuget\packages\system.runtime.serialization.primitives\4.1.1\ref\netstandard1.3\System.Runtime.Serialization.Primitives.dll</HintPath>
-    </Reference>
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
