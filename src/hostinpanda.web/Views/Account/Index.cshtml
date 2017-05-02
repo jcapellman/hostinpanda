@@ -1,0 +1,25 @@
+﻿@model hostinpanda.web.Models.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>login</h1>
+
+<div class="registerContainer">
+    Enter your credentials below.<br /><br />
+
+    <form asp-action="AttemptLogin" method="post">
+        <input asp-for="Username" class="form-control" placeholder="username" /><br />
+        <input asp-for="Password" type="password" class="form-control" placeholder="password" /><br />
+
+        <input type="submit" value="login" class="btn btn-default" />
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorString))
+    {
+        <div class="errorContainer">
+            @Model.ErrorString
+        </div>
+    }
+</div>

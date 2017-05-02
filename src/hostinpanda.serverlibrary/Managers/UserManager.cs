@@ -15,6 +15,28 @@ namespace hostinpanda.serverlibrary.Managers
         {
         }
 
+        public async Task<ReturnContainer<Users>> Login(string username, string password)
+        {
+            using (var eFactory = new EntityFactory(Wrapper.DBConnectionString))
+            {
+                var result = await eFactory.GetListAsync<Users>("Users");
+
+                if (result.HasError)
+                {
+                    throw new Exception("User doesn't exist");
+                }
+
+                var user = result.ObjectValue.FirstOrDefault(a => a.Username == username && HashString(password) == a.Password);
+
+                if (user == null)
+                {
+                    throw new Exception("User doesn't exist");
+                }
+
+                return new ReturnContainer<Users>(user);
+            }
+        }
+
         public async Task<ReturnContainer<bool>> CreateUser(string username, string password)
         {
             using (var eFactory = new EntityFactory(Wrapper.DBConnectionString))
