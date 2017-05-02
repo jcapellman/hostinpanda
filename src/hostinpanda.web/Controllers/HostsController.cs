@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 using hostinpanda.serverlibrary.Managers;
 
@@ -6,9 +7,14 @@ namespace hostinpanda.web.Controllers
 {
     public class HostsController : BaseController
     {
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var hostResponse = new HostManager(Wrapper).GetHostListing(CurrentUserID);
+            var hostResponse = await new HostManager(Wrapper).GetHostListingAsync(CurrentUserID);
+
+            if (hostResponse.HasError)
+            {
+                return ErrorView(hostResponse.ErrorString);
+            }
 
             return hostResponse.HasError ? ErrorView(hostResponse.ErrorString) : View("Index", hostResponse.ObjectValue);
         }
