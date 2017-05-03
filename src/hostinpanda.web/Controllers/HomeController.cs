@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using hostinpanda.clientlibrary.Common;
+using Microsoft.AspNetCore.Mvc;
 
 namespace hostinpanda.web.Controllers
 {
     public class HomeController : BaseController
     {
+        public HomeController(GlobalSettings argGlobalSettings) : base(argGlobalSettings)
+        {
+        }
+
         public IActionResult Index()
         {
             return View();

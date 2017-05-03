@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-
+using hostinpanda.clientlibrary.Common;
 using hostinpanda.serverlibrary.Managers;
 using hostinpanda.web.Models;
 
@@ -9,6 +9,10 @@ namespace hostinpanda.web.Controllers
 {
     public class AccountController : BaseController
     {
+        public AccountController(GlobalSettings argGlobalSettings) : base(argGlobalSettings)
+        {
+        }
+
         public async Task<ActionResult> AttemptLogin(LoginModel model)
         {
             var result = await new UserManager(Wrapper).Login(model.Username, model.Password);
