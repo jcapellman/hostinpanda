@@ -6,7 +6,10 @@ namespace hostinpanda.web.Controllers
 {
     public class BaseController : Controller
     {
-        protected ManagerWrapper Wrapper;
+        protected ManagerWrapper Wrapper => new ManagerWrapper
+        {
+            DBConnectionString = "localhost"
+        };
 
         protected int CurrentUserID { get; set; }
 
