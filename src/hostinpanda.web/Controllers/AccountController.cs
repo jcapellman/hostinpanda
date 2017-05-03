@@ -18,7 +18,7 @@ namespace hostinpanda.web.Controllers
 
         public ActionResult Index() => View(new LoginModel());
 
-        public ActionResult Register() => View();
+        public ActionResult Register() => View(new RegisterModel());
 
         public async Task<ActionResult> AttemptRegister(RegisterModel model)
         {
