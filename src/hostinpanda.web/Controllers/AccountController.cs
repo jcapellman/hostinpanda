@@ -16,7 +16,7 @@ namespace hostinpanda.web.Controllers
             return result.HasError ? ErrorView(result.ErrorString) : RedirectToAction("Index", "Account");
         }
 
-        public ActionResult Index() => View();
+        public ActionResult Index() => View(new LoginModel());
 
         public ActionResult Register() => View();
 
