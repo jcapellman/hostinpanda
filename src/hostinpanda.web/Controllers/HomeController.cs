@@ -1,11 +1,12 @@
 ﻿using hostinpanda.clientlibrary.Common;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace hostinpanda.web.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController(GlobalSettings argGlobalSettings) : base(argGlobalSettings)
+        public HomeController(IOptions<GlobalSettings> argGlobalSettings) : base(argGlobalSettings.Value)
         {
         }
 

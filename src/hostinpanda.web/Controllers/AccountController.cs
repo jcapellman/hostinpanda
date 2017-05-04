@@ -5,12 +5,13 @@ using hostinpanda.serverlibrary.Managers;
 using hostinpanda.web.Models;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace hostinpanda.web.Controllers
 {
     public class AccountController : BaseController
     {
-        public AccountController(GlobalSettings argGlobalSettings) : base(argGlobalSettings)
+        public AccountController(IOptions<GlobalSettings> argGlobalSettings) : base(argGlobalSettings.Value)
         {
         }
 
