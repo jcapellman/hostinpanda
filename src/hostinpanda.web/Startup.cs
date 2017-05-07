@@ -35,8 +35,7 @@ namespace hostinpanda.web
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();                
             }
             else
             {
