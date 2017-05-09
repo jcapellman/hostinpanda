@@ -15,25 +15,19 @@ namespace hostinpanda.serverlibrary.Managers
         {
         }
 
-        public async Task<ReturnContainer<Users>> Login(string username, string password)
+        public ReturnContainer<Users> Login(string username, string password)
         {
             using (var eFactory = new EntityFactory(Wrapper.DBConnectionString))
             {
-                var result = await eFactory.GetListAsync<Users>("Users");
+                var result =
+                    eFactory.Users.FirstOrDefault(a => a.Username == username && a.Password == HashString(password));
 
-                if (result.HasError)
+                if (result == null)
                 {
                     throw new Exception("User doesn't exist");
                 }
-
-                var user = result.ObjectValue.FirstOrDefault(a => a.Username == username && HashString(password) == a.Password);
-
-                if (user == null)
-                {
-                    throw new Exception("User doesn't exist");
-                }
-
-                return new ReturnContainer<Users>(user);
+                
+                return new ReturnContainer<Users>(result);
             }
         }
 
@@ -41,29 +35,20 @@ namespace hostinpanda.serverlibrary.Managers
         {
             using (var eFactory = new EntityFactory(Wrapper.DBConnectionString))
             {
-                var usersResult = await eFactory.GetListAsync<Users>("Users");
-
-                if (usersResult.HasError)
-                {
-                    throw new Exception(usersResult.ErrorString);
-                }
-
-                if (usersResult.ObjectValue.Any(a => a.Username == username))
+                if (eFactory.Users.Any(a => a.Username == username && a.Active))
                 {
                     throw new Exception("User already exists");
                 }
 
-                usersResult.ObjectValue.Add(new Users
+                var user = new Users
                 {
                     Username = username,
-                    Password = HashString(password),
-                    Active = true,
-                    Created = DateTimeOffset.Now,
-                    Modified = DateTimeOffset.Now,
-                    ID = GenerateID(usersResult.ObjectValue.Select(a => a.ID).ToList())
-                });
+                    Password = HashString(password)
+                };
 
-                return await eFactory.WriteAsync("Users", usersResult.ObjectValue);
+                await eFactory.Users.AddAsync(user);
+                
+                return new ReturnContainer<bool>(true);
             }
         }
     }

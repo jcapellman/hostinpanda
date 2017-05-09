@@ -1,42 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
-using hostinpanda.clientlibrary;
+using hostinpanda.serverlibrary.DAL.Tables;
 
-using Newtonsoft.Json;
-using StackExchange.Redis;
+using Microsoft.EntityFrameworkCore;
 
 namespace hostinpanda.serverlibrary.DAL
 {
-    public class EntityFactory : IDisposable
+    public class EntityFactory : DbContext
     {
-        private readonly ConnectionMultiplexer _redis;
-        private IDatabase _db;
-        
+        public DbSet<Users> Users { get; set; }
+        public DbSet<Hosts> Hosts { get; set; }
+
+        private readonly string _connectionString;
+
         public EntityFactory(string connectionString)
         {
-            _redis = ConnectionMultiplexer.Connect(connectionString);
-            _db = _redis.GetDatabase();
+            _connectionString = connectionString;
         }
 
-        public async Task<ReturnContainer<List<T>>> GetListAsync<T>(string key)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var val = await _db.StringGetAsync(key);
-
-            return !val.HasValue ? new ReturnContainer<List<T>>(null) : new ReturnContainer<List<T>>((List<T>)JsonConvert.DeserializeObject(val));
+            optionsBuilder.UseNpgsql(_connectionString);
         }
 
-        public async Task<ReturnContainer<bool>> WriteAsync<T>(string key, T value)
+        public override int SaveChanges()
         {
-            var result = await _db.StringSetAsync(key, JsonConvert.SerializeObject(value));
+            var changeSet = ChangeTracker.Entries();
 
-            return new ReturnContainer<bool>(result);
-        }
+            if (changeSet == null)
+            {
+                return base.SaveChanges();
+            }
 
-        public void Dispose()
-        {
-            _redis?.Dispose();
+            foreach (var entry in changeSet.Where(c => c.State != EntityState.Unchanged))
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Member("Created").CurrentValue = DateTimeOffset.Now;
+                        entry.Member("Active").CurrentValue = true;
+                        break;
+                }
+
+                entry.Member("Modified").CurrentValue = DateTimeOffset.Now;
+            }
+
+            return base.SaveChanges();
         }
     }
 }

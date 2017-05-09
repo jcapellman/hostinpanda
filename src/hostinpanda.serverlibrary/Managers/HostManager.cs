@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 using hostinpanda.clientlibrary;
 using hostinpanda.clientlibrary.Transports.Hosts;
+
 using hostinpanda.serverlibrary.DAL;
-using hostinpanda.serverlibrary.DAL.Tables;
 using hostinpanda.serverlibrary.Wrappers;
 
 namespace hostinpanda.serverlibrary.Managers
@@ -17,18 +16,13 @@ namespace hostinpanda.serverlibrary.Managers
         {
         }
 
-        public async Task<ReturnContainer<List<HostListingResponseItem>>> GetHostListingAsync(int userID)
+        public ReturnContainer<List<HostListingResponseItem>> GetHostListing(int userID)
         {
             using (var eFactory = new EntityFactory(Wrapper.DBConnectionString))
             {
-                var hostsResult = await eFactory.GetListAsync<Hosts>($"HOSTS_{userID}");
-
-                if (hostsResult.HasError)
-                {
-                    throw new Exception(hostsResult.ErrorString);
-                }
-
-                return new ReturnContainer<List<HostListingResponseItem>>(hostsResult.ObjectValue.Select(a => new HostListingResponseItem
+                var hostsResult = eFactory.Hosts.Where(a => a.UserID == userID).ToList();
+                
+                return new ReturnContainer<List<HostListingResponseItem>>(hostsResult.Select(a => new HostListingResponseItem
                 {
                     Alive = a.Active,
                     HostAddress = a.HostName,

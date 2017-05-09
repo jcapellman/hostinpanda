@@ -15,9 +15,9 @@ namespace hostinpanda.web.Controllers
         {
         }
 
-        public async Task<ActionResult> AttemptLogin(LoginModel model)
+        public ActionResult AttemptLogin(LoginModel model)
         {
-            var result = await new UserManager(Wrapper).Login(model.Username, model.Password);
+            var result = new UserManager(Wrapper).Login(model.Username, model.Password);
 
             return result.HasError ? ErrorView(result.ErrorString) : RedirectToAction("Index", "Account");
         }

@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-using hostinpanda.clientlibrary.Common;
-using Microsoft.AspNetCore.Mvc;
-
+﻿using hostinpanda.clientlibrary.Common;
 using hostinpanda.serverlibrary.Managers;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace hostinpanda.web.Controllers
@@ -13,9 +12,9 @@ namespace hostinpanda.web.Controllers
         {
         }
 
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var hostResponse = await new HostManager(Wrapper).GetHostListingAsync(CurrentUserID);
+            var hostResponse = new HostManager(Wrapper).GetHostListing(CurrentUserID);
 
             if (hostResponse.HasError)
             {
