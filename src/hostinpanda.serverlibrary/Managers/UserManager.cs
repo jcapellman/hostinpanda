@@ -47,7 +47,9 @@ namespace hostinpanda.serverlibrary.Managers
                 };
 
                 await eFactory.Users.AddAsync(user);
-                
+
+                await eFactory.SaveChangesAsync();
+
                 return new ReturnContainer<bool>(true);
             }
         }
