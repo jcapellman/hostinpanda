@@ -42,6 +42,8 @@ namespace hostinpanda.web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseStatusCodePagesWithRedirects("Home/Error");
+
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
