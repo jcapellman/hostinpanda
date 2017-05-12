@@ -1,11 +1,13 @@
 ﻿using hostinpanda.clientlibrary.Common;
 using hostinpanda.serverlibrary.Managers;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace hostinpanda.web.Controllers
 {
+    [Authorize]
     public class HostsController : BaseController
     {
         public HostsController(IOptions<GlobalSettings> argGlobalSettings) : base(argGlobalSettings.Value)
