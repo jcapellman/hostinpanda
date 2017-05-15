@@ -41,6 +41,9 @@ namespace hostinpanda.serverlibrary.DAL
                         entry.Member("Created").CurrentValue = DateTimeOffset.Now;
                         entry.Member("Active").CurrentValue = true;
                         break;
+                    case EntityState.Deleted:
+                        entry.Member("Active").CurrentValue = false;
+                        break;
                 }
 
                 entry.Member("Modified").CurrentValue = DateTimeOffset.Now;
