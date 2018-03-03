@@ -1,6 +1,14 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #2e2e2e;
+}
+
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 
 /* Wrapping element */
@@ -46,4 +54,6 @@ textarea {
 
 footer {
     text-align: center;
+    color: White;
+    margin-top: 30px;
 }
