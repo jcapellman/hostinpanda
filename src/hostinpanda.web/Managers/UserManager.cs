@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using hostinpanda.clientlibrary;
-using hostinpanda.serverlibrary.DAL;
-using hostinpanda.serverlibrary.DAL.Tables;
 using hostinpanda.serverlibrary.Wrappers;
+using hostinpanda.web.Common;
+using hostinpanda.web.DAL;
+using hostinpanda.web.DAL.Tables;
 
-namespace hostinpanda.serverlibrary.Managers
+namespace hostinpanda.web.Managers
 {
     public class UserManager : BaseManager
     {

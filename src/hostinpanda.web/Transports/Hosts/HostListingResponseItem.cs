@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace hostinpanda.clientlibrary.Transports.Hosts
+namespace hostinpanda.web.Transports.Hosts
 {
     [DataContract]
     public class HostListingResponseItem

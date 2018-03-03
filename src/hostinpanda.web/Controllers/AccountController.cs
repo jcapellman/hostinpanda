@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
-
-using hostinpanda.clientlibrary.Common;
-using hostinpanda.serverlibrary.Managers;
+using hostinpanda.web.Common;
+using hostinpanda.web.Managers;
 using hostinpanda.web.Models;
 
 using Microsoft.AspNetCore.Mvc;

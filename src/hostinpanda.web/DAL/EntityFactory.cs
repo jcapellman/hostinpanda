@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
-
-using hostinpanda.serverlibrary.DAL.Tables;
-
+using hostinpanda.web.DAL.Tables;
 using Microsoft.EntityFrameworkCore;
 
-namespace hostinpanda.serverlibrary.DAL
+namespace hostinpanda.web.DAL
 {
     public class EntityFactory : DbContext
     {
@@ -21,7 +19,7 @@ namespace hostinpanda.serverlibrary.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(_connectionString);
+            optionsBuilder.UseSqlServer(_connectionString);
         }
 
         public override int SaveChanges()

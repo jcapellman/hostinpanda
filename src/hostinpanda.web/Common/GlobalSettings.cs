@@ -1,4 +1,4 @@
-﻿namespace hostinpanda.clientlibrary.Common
+﻿namespace hostinpanda.web.Common
 {
     public class GlobalSettings
     {

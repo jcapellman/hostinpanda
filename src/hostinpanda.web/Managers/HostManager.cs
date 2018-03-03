@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using hostinpanda.clientlibrary;
-using hostinpanda.clientlibrary.Transports.Hosts;
-
-using hostinpanda.serverlibrary.DAL;
 using hostinpanda.serverlibrary.Wrappers;
+using hostinpanda.web.Common;
+using hostinpanda.web.DAL;
+using hostinpanda.web.Transports.Hosts;
 
-namespace hostinpanda.serverlibrary.Managers
+namespace hostinpanda.web.Managers
 {
     public class HostManager : BaseManager
     {

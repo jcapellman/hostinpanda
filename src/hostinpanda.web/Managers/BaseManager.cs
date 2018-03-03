@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-
 using hostinpanda.serverlibrary.Wrappers;
 
-namespace hostinpanda.serverlibrary.Managers
+namespace hostinpanda.web.Managers
 {
     public class BaseManager
     {

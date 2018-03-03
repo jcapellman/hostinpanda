@@ -1,4 +1,4 @@
-﻿using hostinpanda.clientlibrary.Common;
+﻿using hostinpanda.web.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 

@@ -1,6 +1,5 @@
-﻿using hostinpanda.clientlibrary.Common;
-using hostinpanda.serverlibrary.Managers;
-
+﻿using hostinpanda.web.Common;
+using hostinpanda.web.Managers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
