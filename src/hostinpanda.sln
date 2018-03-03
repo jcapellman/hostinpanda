@@ -5,14 +5,6 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hostinpanda.web", "hostinpanda.web\hostinpanda.web.csproj", "{6C76237C-0089-4C4F-A5FD-E15C275786B7}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "hostinpanda.mobile", "hostinpanda.mobile\hostinpanda.mobile.shproj", "{744C4A2F-8323-45F9-9718-BA3147A9F831}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hostinpanda.mobile.android", "hostinpanda.mobile.Android\hostinpanda.mobile.android.csproj", "{9D017F58-14CB-4FFD-BD99-7D2FBF300678}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hostinpanda.mobile.ios", "hostinpanda.mobile.iOS\hostinpanda.mobile.ios.csproj", "{1B7EF992-0BCE-47D7-B76B-649005260153}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hostinpanda.mobile.uwp", "hostinpanda.mobile.UWP\hostinpanda.mobile.uwp.csproj", "{3D24232C-9E21-47FA-8717-02216B222D71}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hostinpanda.api", "hostinpanda.api\hostinpanda.api.csproj", "{2C371F8A-CE49-42D3-9C37-5EAE5DFCF680}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hostinpanda.clientlibrary", "hostinpanda.clientlibrary\hostinpanda.clientlibrary.csproj", "{7982FAF0-C9AC-47EB-B423-410968F75653}"
