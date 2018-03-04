@@ -4,18 +4,27 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>register</h1>
 
-<div class="registerContainer">
-    Register an account below to begin posting .plan updates.<br /><br />
+<div class="center-block">
+    <img src="~/images/logo.png" class="img-rounded img-responsive splash" alt="hostin panda" />
 
-    <form asp-action="AttemptRegister" method="post">
-        <input asp-for="Username" class="form-control" placeholder="username" /><br />
-        <input asp-for="Password" type="password" class="form-control" placeholder="password" /><br />
-        
-        <input type="submit" value="register" class="btn btn-default" />
-    </form>
+    <h1>register</h1>
 
+    <div class="form-group text-center">
+        <p class="text-left">Register an account below in order to setup alerts</p>
+
+        <form asp-action="AttemptRegister" method="post">
+            <div class="form-group">
+                <input asp-for="Username" class="form-control" placeholder="username" />
+            </div>
+
+            <div class="form-group">
+                <input asp-for="Password" type="password" class="form-control" placeholder="password" />
+            </div>
+
+            <button type="submit" class="btn btn-primary text-center">register</button>
+        </form>
+    </div>
 
     @if (!string.IsNullOrEmpty(Model.ErrorMessage))
     {
