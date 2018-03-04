@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using hostinpanda.serverlibrary.Wrappers;
+
 using hostinpanda.web.Common;
 using hostinpanda.web.DAL;
 using hostinpanda.web.Transports.Hosts;
@@ -16,7 +16,7 @@ namespace hostinpanda.web.Managers
 
         public ReturnContainer<List<HostListingResponseItem>> GetHostListing(int userID)
         {
-            using (var eFactory = new EntityFactory(Wrapper.DBConnectionString))
+            using (var eFactory = new EntityFactory(Wrapper.GSettings.DatabaseConnection))
             {
                 var hostsResult = eFactory.Hosts.Where(a => a.UserID == userID).ToList();
                 

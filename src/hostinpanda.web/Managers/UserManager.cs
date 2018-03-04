@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using hostinpanda.serverlibrary.Wrappers;
 using hostinpanda.web.Common;
 using hostinpanda.web.DAL;
 using hostinpanda.web.DAL.Tables;
@@ -17,7 +16,7 @@ namespace hostinpanda.web.Managers
 
         public ReturnContainer<Users> Login(string username, string password)
         {
-            using (var eFactory = new EntityFactory(Wrapper.DBConnectionString))
+            using (var eFactory = new EntityFactory(Wrapper.GSettings.DatabaseConnection))
             {
                 var result =
                     eFactory.Users.FirstOrDefault(a => a.Username == username && a.Password == HashString(password));
@@ -33,7 +32,7 @@ namespace hostinpanda.web.Managers
 
         public async Task<ReturnContainer<bool>> CreateUser(string username, string password)
         {
-            using (var eFactory = new EntityFactory(Wrapper.DBConnectionString))
+            using (var eFactory = new EntityFactory(Wrapper.GSettings.DatabaseConnection))
             {
                 if (eFactory.Users.Any(a => a.Username == username && a.Active))
                 {

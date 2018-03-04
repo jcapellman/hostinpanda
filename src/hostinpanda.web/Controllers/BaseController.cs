@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using hostinpanda.serverlibrary.Wrappers;
 using hostinpanda.web.Common;
 
 namespace hostinpanda.web.Controllers
 {
     public class BaseController : Controller
     {
-        protected GlobalSettings globalSettings;
+        protected readonly GlobalSettings GlobalSettings;
 
         public BaseController(GlobalSettings argGlobalSettings)
         {
-            globalSettings = argGlobalSettings;
+            GlobalSettings = argGlobalSettings;
         }
 
         protected ManagerWrapper Wrapper => new ManagerWrapper
         {
-            DBConnectionString = globalSettings.DatabaseConnection
+            GSettings = GlobalSettings
         };
 
         protected int CurrentUserID { get; set; }
