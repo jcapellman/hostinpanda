@@ -4,22 +4,31 @@
     ViewData["Title"] = "Login";
 }
 
-<h1>login</h1>
+<div class="center-block">
+    <img src="~/images/logo.png" class="img-rounded img-responsive splash" alt="hostin panda" />
 
-<div class="registerContainer">
-    Enter your credentials below.<br /><br />
+    <h1>login</h1>
 
-    <form asp-action="AttemptLogin" method="post">
-        <input asp-for="Username" class="form-control" placeholder="username" /><br />
-        <input asp-for="Password" type="password" class="form-control" placeholder="password" /><br />
+    <div class="form-group text-center">
+        <p class="text-left">Enter your credentials below</p>
 
-        <input type="submit" value="login" class="btn btn-default" />
-    </form>
+        <form asp-action="AttemptLogin" method="post">
+            <div class="form-group">
+                <input asp-for="Username" class="form-control" placeholder="username" />
+            </div>
 
-    @if (!string.IsNullOrEmpty(Model.ErrorString))
-    {
-        <div class="errorContainer">
-            @Model.ErrorString
-        </div>
-    }
+            <div class="form-group">
+                <input asp-for="Password" type="password" class="form-control" placeholder="password" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">login</button>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorString))
+        {
+            <div class="errorContainer">
+                @Model.ErrorString
+            </div>
+        }
+    </div>
 </div>
