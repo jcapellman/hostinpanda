@@ -1,17 +1,16 @@
 ﻿using System.Threading.Tasks;
 
-using hostinpanda.web.Common;
+using hostinpanda.web.DAL;
 using hostinpanda.web.Managers;
 using hostinpanda.web.Models;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace hostinpanda.web.Controllers
 {
     public class AccountController : BaseController
     {
-        public AccountController(IOptions<GlobalSettings> argGlobalSettings) : base(argGlobalSettings.Value)
+        public AccountController(DALdbContext dbContext) : base(dbContext)
         {
         }
 

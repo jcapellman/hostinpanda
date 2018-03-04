@@ -1,6 +1,8 @@
-﻿using hostinpanda.web.Common;
+﻿using hostinpanda.web.DAL;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -22,7 +24,7 @@ namespace hostinpanda.web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<GlobalSettings>(Configuration.GetSection("GlobalSettings"));
+            services.AddDbContext<DALdbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMvc();
         }
@@ -35,12 +37,7 @@ namespace hostinpanda.web
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using hostinpanda.web.Common;
-using hostinpanda.web.DAL;
 using hostinpanda.web.DAL.Tables;
 
 namespace hostinpanda.web.Managers
@@ -16,41 +15,34 @@ namespace hostinpanda.web.Managers
 
         public ReturnContainer<Users> Login(string username, string password)
         {
-            using (var eFactory = new EntityFactory(Wrapper.GSettings.DatabaseConnection))
-            {
-                var result =
-                    eFactory.Users.FirstOrDefault(a => a.Username == username && a.Password == HashString(password));
+            var result = Wrapper.DbContext.Users.FirstOrDefault(a => a.Username == username && a.Password == HashString(password));
 
-                if (result == null)
-                {
-                    throw new Exception("User doesn't exist");
-                }
-                
-                return new ReturnContainer<Users>(result);
+            if (result == null)
+            {
+                throw new Exception("User doesn't exist");
             }
+                
+            return new ReturnContainer<Users>(result);         
         }
 
         public async Task<ReturnContainer<bool>> CreateUser(string username, string password)
         {
-            using (var eFactory = new EntityFactory(Wrapper.GSettings.DatabaseConnection))
+            if (Wrapper.DbContext.Users.Any(a => a.Username == username && a.Active))
             {
-                if (eFactory.Users.Any(a => a.Username == username && a.Active))
-                {
-                    throw new Exception("User already exists");
-                }
-
-                var user = new Users
-                {
-                    Username = username,
-                    Password = HashString(password)
-                };
-
-                await eFactory.Users.AddAsync(user);
-
-                await eFactory.SaveChangesAsync();
-
-                return new ReturnContainer<bool>(true);
+                throw new Exception("User already exists");
             }
+
+            var user = new Users
+            {
+                Username = username,
+                Password = HashString(password)
+            };
+
+            await Wrapper.DbContext.Users.AddAsync(user);
+
+            await Wrapper.DbContext.SaveChangesAsync();
+
+            return new ReturnContainer<bool>(true);         
         }
     }
 }

@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Linq;
+
 using hostinpanda.web.DAL.Tables;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace hostinpanda.web.DAL
 {
-    public class EntityFactory : DbContext
+    public class DALdbContext : DbContext
     {
         public DbSet<Users> Users { get; set; }
         public DbSet<Hosts> Hosts { get; set; }
 
         private readonly string _connectionString;
 
-        public EntityFactory(string connectionString)
+        public DALdbContext(string connectionString)
         {
             _connectionString = connectionString;
         }

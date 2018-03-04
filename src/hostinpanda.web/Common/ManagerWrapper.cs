@@ -1,7 +1,9 @@
-﻿namespace hostinpanda.web.Common
+﻿using hostinpanda.web.DAL;
+
+namespace hostinpanda.web.Common
 {
     public class ManagerWrapper
     {
-        public GlobalSettings GSettings { get; set; }
+        public DALdbContext DbContext { get; internal set; }
     }
 }

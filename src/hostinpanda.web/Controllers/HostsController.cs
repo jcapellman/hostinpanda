@@ -1,15 +1,15 @@
-﻿using hostinpanda.web.Common;
+﻿using hostinpanda.web.DAL;
 using hostinpanda.web.Managers;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace hostinpanda.web.Controllers
 {
     [Authorize]
     public class HostsController : BaseController
     {
-        public HostsController(IOptions<GlobalSettings> argGlobalSettings) : base(argGlobalSettings.Value)
+        public HostsController(DALdbContext dbContext) : base(dbContext)
         {
         }
 

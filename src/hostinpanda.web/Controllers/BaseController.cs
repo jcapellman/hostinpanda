@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using hostinpanda.web.Common;
+using hostinpanda.web.DAL;
 
 namespace hostinpanda.web.Controllers
 {
     public class BaseController : Controller
     {
-        protected readonly GlobalSettings GlobalSettings;
+        private readonly DALdbContext dbContext;
 
-        public BaseController(GlobalSettings argGlobalSettings)
+        public BaseController(DALdbContext dbContext = null)
         {
-            GlobalSettings = argGlobalSettings;
+            this.dbContext = dbContext;     
         }
 
         protected ManagerWrapper Wrapper => new ManagerWrapper
         {
-            GSettings = GlobalSettings
+            DbContext = dbContext
         };
 
         protected int CurrentUserID { get; set; }
