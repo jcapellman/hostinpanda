@@ -1,11 +1,18 @@
-﻿namespace hostinpanda.web.DAL.Tables
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace hostinpanda.web.DAL.Tables
 {
     public class Hosts : BaseTable
     {
-       public string HostName { get; set; }
+        public string HostName { get; set; }
 
-       public bool AlertsEnabled { get; set; }
+        public bool AlertsEnabled { get; set; }
 
-       public int UserID { get; set; }
+        [Required]
+        [ForeignKey("UserID")]
+        public Users User { get; set; }
+
+        public int UserID { get; set; }
     }
 }
