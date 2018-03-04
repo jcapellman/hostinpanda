@@ -14,14 +14,8 @@ namespace hostinpanda.web.DAL
 
         private readonly string _connectionString;
 
-        public DALdbContext(string connectionString)
+        public DALdbContext(DbContextOptions options) : base(options)
         {
-            _connectionString = connectionString;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_connectionString);
         }
 
         public override int SaveChanges()
