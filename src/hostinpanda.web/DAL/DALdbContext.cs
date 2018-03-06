@@ -10,7 +10,10 @@ namespace hostinpanda.web.DAL
     public class DALdbContext : DbContext
     {
         public DbSet<Users> Users { get; set; }
+
         public DbSet<Hosts> Hosts { get; set; }
+
+        public DbSet<HostCheckLog> HostLog { get; set; }
 
         private readonly string _connectionString;
 
