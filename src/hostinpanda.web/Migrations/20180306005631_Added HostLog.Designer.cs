@@ -11,9 +11,10 @@ using System;
 namespace hostinpanda.web.Migrations
 {
     [DbContext(typeof(DALdbContext))]
-    partial class DALdbContextModelSnapshot : ModelSnapshot
+    [Migration("20180306005631_Added HostLog")]
+    partial class AddedHostLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
