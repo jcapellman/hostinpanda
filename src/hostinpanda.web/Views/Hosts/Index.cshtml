@@ -1,2 +1,26 @@
-﻿@using hostinpanda.web.Transports.Hosts
-@model List<hostinpanda.web.Transports.Hosts.HostListingResponseItem>
+﻿@model List<hostinpanda.web.Transports.Hosts.HostListingResponseItem>
+
+<h2>hosts</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ip address</th>
+            <th>alive</th>
+            <th>last ping back</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.HostAddress</td>
+            <td>@item.Alive</td>
+            <td>@item.LastPingBack</td>
+            <td>edit | delete</td>
+        </tr>
+    }
+    </tbody>
+</table>
