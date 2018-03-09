@@ -1,7 +1,9 @@
 ﻿using hostinpanda.web.DAL;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +28,12 @@ namespace hostinpanda.web
         {
             services.AddDbContext<DALdbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddAuthentication("HostinCookieScheme").AddCookie("hostinCookie", options =>
+            {
+                options.AccessDeniedPath = new PathString("/Account/Failed");
+                options.LoginPath = new PathString("/Account");
+            });
+
             services.AddMvc();
         }
 
@@ -35,8 +43,10 @@ namespace hostinpanda.web
             
             app.UseStatusCodePagesWithRedirects("Home/Error");
 
-            app.UseStaticFiles();
+            app.UseAuthentication();
 
+            app.UseStaticFiles();
+            
             app.UseMvcWithDefaultRoute();
         }
     }
