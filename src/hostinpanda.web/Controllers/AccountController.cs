@@ -7,6 +7,7 @@ using hostinpanda.web.Managers;
 using hostinpanda.web.Models;
 
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
 namespace hostinpanda.web.Controllers
@@ -17,7 +18,7 @@ namespace hostinpanda.web.Controllers
         {
         }
 
-        public async Task<ActionResult> AttemptLogin(LoginModel model)
+        public ActionResult AttemptLogin(LoginModel model)
         {
             var result = new UserManager(Wrapper).Login(model.Username, model.Password);
 
@@ -27,12 +28,17 @@ namespace hostinpanda.web.Controllers
                 {
                     new Claim(ClaimTypes.Name, result.ObjectValue.Username)
                 };
-                
-                ClaimsIdentity identity = new ClaimsIdentity(claims, "cookie");
-                
-                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-                
-                await HttpContext.SignInAsync(scheme: "hostinCookie", principal: principal);
+
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var principal = new ClaimsPrincipal(identity);
+
+                var props = new AuthenticationProperties
+                {
+                    IsPersistent = true
+                };
+
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
             }
 
             return result.HasError ? ErrorView(result.ErrorString) : RedirectToAction("Index", "Hosts");

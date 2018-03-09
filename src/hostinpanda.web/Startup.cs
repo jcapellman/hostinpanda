@@ -28,11 +28,7 @@ namespace hostinpanda.web
         {
             services.AddDbContext<DALdbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddAuthentication("HostinCookieScheme").AddCookie("hostinCookie", options =>
-            {
-                options.AccessDeniedPath = new PathString("/Account/Failed");
-                options.LoginPath = new PathString("/Account");
-            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             services.AddMvc();
         }

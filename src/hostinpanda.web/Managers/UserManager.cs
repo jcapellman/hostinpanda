@@ -15,14 +15,20 @@ namespace hostinpanda.web.Managers
 
         public ReturnContainer<Users> Login(string username, string password)
         {
-            var result = Wrapper.DbContext.Users.FirstOrDefault(a => a.Username == username && a.Password == HashString(password));
-
-            if (result == null)
+            try
             {
-                throw new Exception("User doesn't exist");
+                var result = Wrapper.DbContext.Users.FirstOrDefault(a => a.Username == username && a.Password == HashString(password));
+
+                if (result == null)
+                {
+                    throw new Exception("User doesn't exist");
+                }
+
+                return new ReturnContainer<Users>(result);
+            } catch (Exception ex)
+            {
+                return new ReturnContainer<Users>(null, ex.ToString());
             }
-                
-            return new ReturnContainer<Users>(result);         
         }
 
         public async Task<ReturnContainer<bool>> CreateUser(string username, string password)
