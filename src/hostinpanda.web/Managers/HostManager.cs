@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 using hostinpanda.web.Common;
+using hostinpanda.web.DAL.Tables;
+using hostinpanda.web.Models;
 using hostinpanda.web.Transports.Hosts;
 
 namespace hostinpanda.web.Managers
@@ -13,9 +15,23 @@ namespace hostinpanda.web.Managers
         {
         }
 
-        public ReturnContainer<List<HostListingResponseItem>> GetHostListing(int userID)
+        public ReturnContainer<bool> AddHost(NewHostModel model)
         {
-            var hostsResult = Wrapper.DbContext.Hosts.Where(a => a.UserID == userID).ToList();
+            var host = new Hosts
+            {
+                AlertsEnabled = true,
+                HostName = model.HostName,
+                UserID = 1  // Fix with Identity from Wrapper
+            };
+
+            Wrapper.DbContext.Hosts.Add(host);
+
+            return new ReturnContainer<bool>(Wrapper.DbContext.SaveChanges() > 0);
+        }
+
+        public ReturnContainer<List<HostListingResponseItem>> GetHostListing()
+        {
+            var hostsResult = Wrapper.DbContext.Hosts.Where(a => a.User.Username == Wrapper.CurrentUserName).ToList();
                 
             return new ReturnContainer<List<HostListingResponseItem>>(hostsResult.Select(a => new HostListingResponseItem
             {
