@@ -16,11 +16,10 @@ namespace hostinpanda.web.Controllers
 
         protected ManagerWrapper Wrapper => new ManagerWrapper
         {
-            DbContext = dbContext
+            DbContext = dbContext,
+            CurrentUserName = User.Identity.Name
         };
-
-        protected int CurrentUserID { get; set; }
-
+        
         public ActionResult ErrorView(string content)
         {
             return View("Error", "Home");
