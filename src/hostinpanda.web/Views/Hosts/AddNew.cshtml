@@ -1,0 +1,18 @@
+﻿@model hostinpanda.web.Models.NewHostModel
+
+@{
+    ViewData["Title"] = "add new host";
+}
+
+<h2>add new host</h2>
+
+<form asp-action="CreateHost" method="post">
+    <input class="form-control" type="url" placeholder="hostname" asp-for="HostName" />
+
+    <div class="text-center" style="margin-top: 10px">
+        <div class="btn-group">
+            <a href="/Hosts" class="btn btn-primary">back</a>
+            <button type="submit" class="btn btn-success">submit</button>
+        </div>
+    </div>
+</form>
