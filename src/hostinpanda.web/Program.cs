@@ -11,7 +11,7 @@ namespace hostinpanda.web
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
+                .UseUrls("http://0.0.0.0:5002")
                 .UseStartup<Startup>()
                 .Build();
 
