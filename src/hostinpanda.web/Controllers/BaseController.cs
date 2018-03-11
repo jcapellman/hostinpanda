@@ -3,6 +3,9 @@
 using hostinpanda.web.Common;
 using hostinpanda.web.DAL;
 
+using System.Security.Claims;
+using System;
+
 namespace hostinpanda.web.Controllers
 {
     public class BaseController : Controller
@@ -17,7 +20,7 @@ namespace hostinpanda.web.Controllers
         protected ManagerWrapper Wrapper => new ManagerWrapper
         {
             DbContext = dbContext,
-            CurrentUserName = User.Identity.Name
+            CurrentUserID = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value)
         };
         
         public ActionResult ErrorView(string content)

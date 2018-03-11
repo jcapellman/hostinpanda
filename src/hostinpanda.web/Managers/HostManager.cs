@@ -21,7 +21,7 @@ namespace hostinpanda.web.Managers
             {
                 AlertsEnabled = true,
                 HostName = model.HostName,
-                UserID = 1  // Fix with Identity from Wrapper
+                UserID = Wrapper.CurrentUserID
             };
 
             Wrapper.DbContext.Hosts.Add(host);
@@ -31,7 +31,7 @@ namespace hostinpanda.web.Managers
 
         public ReturnContainer<List<HostListingResponseItem>> GetHostListing()
         {
-            var hostsResult = Wrapper.DbContext.Hosts.Where(a => a.User.Username == Wrapper.CurrentUserName).ToList();
+            var hostsResult = Wrapper.DbContext.Hosts.Where(a => a.UserID == Wrapper.CurrentUserID).ToList();
                 
             return new ReturnContainer<List<HostListingResponseItem>>(hostsResult.Select(a => new HostListingResponseItem
             {

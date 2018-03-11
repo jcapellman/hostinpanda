@@ -26,7 +26,7 @@ namespace hostinpanda.web.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, result.ObjectValue.Username)
+                    new Claim(ClaimTypes.Name, result.ObjectValue.ID.ToString())
                 };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
