@@ -4,3 +4,6 @@ A web app + platform to assist a person with a single web site or multiple to pr
 ### Requirements 
 - ASP.Net Core 2.0
 - SQL Server
+
+### Features
+- Monitor servers with a configurable amount of downtime
