@@ -6,6 +6,6 @@ namespace hostinpanda.web.Common
     {
         public DALdbContext DbContext { get; internal set; }
 
-        public int CurrentUserID { get; internal set; }
+        public HostinUser CurrentUser { get; internal set; }
     }
 }
