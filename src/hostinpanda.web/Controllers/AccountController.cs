@@ -18,6 +18,13 @@ namespace hostinpanda.web.Controllers
         {
         }
 
+        public ActionResult Logout()
+        {
+            HttpContext.SignOutAsync().Wait();
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult AttemptLogin(LoginModel model)
         {
             var result = new UserManager(Wrapper).Login(model.Username, model.Password);
