@@ -31,7 +31,7 @@ namespace hostinpanda.web.Managers
             }
         }
 
-        public async Task<ReturnContainer<bool>> CreateUser(string username, string password)
+        public async Task<ReturnContainer<int>> CreateUser(string username, string password)
         {
             if (Wrapper.DbContext.Users.Any(a => a.Username == username && a.Active))
             {
@@ -48,7 +48,7 @@ namespace hostinpanda.web.Managers
 
             await Wrapper.DbContext.SaveChangesAsync();
 
-            return new ReturnContainer<bool>(true);         
+            return new ReturnContainer<int>(user.ID);         
         }
     }
 }

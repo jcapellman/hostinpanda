@@ -25,27 +25,32 @@ namespace hostinpanda.web.Controllers
             return RedirectToAction("Index");
         }
 
+        private void LoginUser(int userID)
+        {
+            var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, userID.ToString())
+                };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var principal = new ClaimsPrincipal(identity);
+
+            var props = new AuthenticationProperties
+            {
+                IsPersistent = true
+            };
+
+            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
+        }
+
         public ActionResult AttemptLogin(LoginModel model)
         {
             var result = new UserManager(Wrapper).Login(model.Username, model.Password);
 
             if (!result.HasError && result.ObjectValue != null)
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, result.ObjectValue.ID.ToString())
-                };
-
-                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                var principal = new ClaimsPrincipal(identity);
-
-                var props = new AuthenticationProperties
-                {
-                    IsPersistent = true
-                };
-
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
+                LoginUser(result.ObjectValue.ID);
             }
 
             return result.HasError ? ErrorView(result.ErrorString) : RedirectToAction("Index", "Hosts");
@@ -59,7 +64,14 @@ namespace hostinpanda.web.Controllers
         {
             var result = await new UserManager(Wrapper).CreateUser(model.Username, model.Password);
 
-            return result.HasError ? ErrorView(result.ErrorString) : RedirectToAction("Index", "Home");
+            if (!result.HasError)
+            {
+                LoginUser(result.ObjectValue);
+
+                return RedirectToAction("Index", "Hosts");
+            }
+
+            return ErrorView(result.ErrorString);
         }
     }
 }
