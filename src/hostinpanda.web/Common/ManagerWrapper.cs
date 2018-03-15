@@ -1,4 +1,4 @@
-﻿using hostinpanda.web.DAL;
+﻿using hostinpanda.library.DAL;
 
 namespace hostinpanda.web.Common
 {

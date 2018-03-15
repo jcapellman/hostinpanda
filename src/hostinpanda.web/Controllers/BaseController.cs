@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using hostinpanda.web.Common;
-using hostinpanda.web.DAL;
+using hostinpanda.library.DAL;
 
 namespace hostinpanda.web.Controllers
 {

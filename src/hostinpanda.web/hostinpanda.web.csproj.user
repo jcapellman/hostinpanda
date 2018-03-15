@@ -8,5 +8,6 @@
     <NameOfLastUsedPublishProfile>CustomProfile</NameOfLastUsedPublishProfile>
     <ShowAllFiles>false</ShowAllFiles>
     <WebStackScaffolding_DependencyDialogWidth>600</WebStackScaffolding_DependencyDialogWidth>
+    <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
   </PropertyGroup>
 </Project>
