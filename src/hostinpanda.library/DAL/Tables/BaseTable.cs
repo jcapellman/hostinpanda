@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace hostinpanda.web.DAL.Tables
+namespace hostinpanda.library.DAL.Tables
 {
     public class BaseTable
     {

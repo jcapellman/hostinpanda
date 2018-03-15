@@ -1,4 +1,4 @@
-﻿namespace hostinpanda.web.Common
+﻿namespace hostinpanda.library.Common
 {
     public class ReturnContainer<T>
     {

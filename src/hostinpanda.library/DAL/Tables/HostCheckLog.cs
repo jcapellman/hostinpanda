@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace hostinpanda.web.DAL.Tables
+namespace hostinpanda.library.DAL.Tables
 {
     public class HostCheckLog : BaseTable
     {

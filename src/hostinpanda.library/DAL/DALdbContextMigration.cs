@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace hostinpanda.web.DAL
+namespace hostinpanda.library.DAL
 {
     public class DALdbContextMigration : IDesignTimeDbContextFactory<DALdbContext>
     {
         public DALdbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DALdbContext>();
-            optionsBuilder.UseSqlServer("Server=localhost;Database=XXX;user id=XXX;password=XXX");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=hostinpanda;user id=sa;password=jc43v3R!");
 
             return new DALdbContext(optionsBuilder.Options);
         }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 
-using hostinpanda.web.DAL.Tables;
+using hostinpanda.library.DAL.Tables;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace hostinpanda.web.DAL
+namespace hostinpanda.library.DAL
 {
     public class DALdbContext : DbContext
     {

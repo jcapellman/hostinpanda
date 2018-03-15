@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace hostinpanda.web.Migrations
+namespace hostinpanda.library.Migrations
 {
     public partial class AddedHostLog : Migration
     {
