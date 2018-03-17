@@ -23,7 +23,10 @@ namespace hostinpanda.library.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionString);
+            if (!string.IsNullOrEmpty(_connectionString))
+            {
+                optionsBuilder.UseSqlServer(_connectionString);
+            }
         }
 
         public DALdbContext(string databaseConnectionString)
