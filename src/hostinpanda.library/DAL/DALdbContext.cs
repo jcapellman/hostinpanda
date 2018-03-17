@@ -21,6 +21,16 @@ namespace hostinpanda.library.DAL
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_connectionString);
+        }
+
+        public DALdbContext(string databaseConnectionString)
+        {
+            _connectionString = databaseConnectionString;
+        }
+        
         public override int SaveChanges()
         {
             var changeSet = ChangeTracker.Entries();
