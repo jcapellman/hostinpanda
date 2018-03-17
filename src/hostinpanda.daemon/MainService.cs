@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Mail;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 using hostinpanda.library.DAL;
 using hostinpanda.library.DAL.Tables;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace hostinpanda.daemon
 {
@@ -19,15 +21,23 @@ namespace hostinpanda.daemon
             _config = config;
         }
 
-        private async Task<bool> IsAliveAsync(Hosts host)
+        private bool IsAlive(Hosts host)
         {
             try
             {
-                using (var httpClient = new HttpClient())
+                try
                 {
-                    var response = await httpClient.GetAsync(host.HostName);
+                    using (var tcpClient = new TcpClient())
+                    {
+                        tcpClient.Connect(host.HostName, 443);
+                        return true;
+                    }
+                }
+                catch (SocketException ex)
+                {
+                    Console.WriteLine(ex);
 
-                    return response.IsSuccessStatusCode;
+                    return false;
                 }
             } catch (Exception ex)
             {
@@ -41,6 +51,9 @@ namespace hostinpanda.daemon
         {
             using (var smtpClient = new SmtpClient(_config.SMTPHostName, _config.SMTPPort))
             {
+                smtpClient.EnableSsl = true;
+                smtpClient.UseDefaultCredentials = false;
+
                 smtpClient.Credentials = new NetworkCredential(_config.SMTPUsername, _config.SMTPPassword);
 
                 MailMessage message = new MailMessage("no-reply@hostinpanda.com", receiver)
@@ -65,7 +78,7 @@ namespace hostinpanda.daemon
                     return;
                 }
 
-                SendEmail(host.User.Username, host.HostName, $"Server {host} is backup after being down since {lastUp} eom");
+                SendEmail(host.User.Username, host.HostName, $"Restored Server {host.HostName} - down since {lastUp} eom");
             }
         }
 
@@ -82,21 +95,21 @@ namespace hostinpanda.daemon
                     lastUp = lastLog.Created.DateTime;
                 }
 
-                SendEmail(host.User.Username, host.HostName, $"Server {host} has been down since {lastUp} eom");
+                SendEmail(host.User.Username, host.HostName, $"Dead Server {host} - down since {lastUp} eom");
             }
         }
 
-        public async void Run()
+        public void Run()
         {
             while (true)
             {
                 using (var db = new DALdbContext(_config.DatabaseConnectionString))
                 {
-                    var hosts = db.Hosts.Where(a => a.Active).ToList();
+                    var hosts = db.Hosts.Include(a => a.User).Where(a => a.Active).ToList();
 
                     foreach (var host in hosts)
                     {
-                        var alive = await IsAliveAsync(host);
+                        var alive = IsAlive(host);
 
                         var hostLog = new HostCheckLog
                         {
@@ -120,7 +133,7 @@ namespace hostinpanda.daemon
                     }
                 }
                 
-                await Task.Delay(60000);
+                Task.Delay(60000);
             }
         }
     }
