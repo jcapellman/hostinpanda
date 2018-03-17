@@ -8,7 +8,12 @@
 
             mainService.Init(ConfigObject.Load("config.json"));
 
-            mainService.Run();
+            while (true)
+            {
+                mainService.Run();
+                
+                System.Threading.Tasks.Task.Delay(300000).Wait();
+            }
         }
     }
 }

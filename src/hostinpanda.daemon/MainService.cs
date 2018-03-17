@@ -16,6 +16,8 @@ namespace hostinpanda.daemon
     {
         private ConfigObject _config;
 
+        private const int ACCEPTABLE_DOWNTIME_MINUTES = 5;
+
         public void Init(ConfigObject config)
         {
             _config = config;
@@ -78,6 +80,13 @@ namespace hostinpanda.daemon
                     return;
                 }
 
+                lastUp = lastLog.Modified.DateTime;
+                
+                if (DateTime.Now.Subtract(lastUp).TotalMinutes < ACCEPTABLE_DOWNTIME_MINUTES)
+                {
+                    return;
+                }
+
                 SendEmail(host.User.Username, host.HostName, $"Restored Server {host.HostName} - down since {lastUp} eom");
             }
         }
@@ -101,39 +110,34 @@ namespace hostinpanda.daemon
 
         public void Run()
         {
-            while (true)
+            using (var db = new DALdbContext(_config.DatabaseConnectionString))
             {
-                using (var db = new DALdbContext(_config.DatabaseConnectionString))
+                var hosts = db.Hosts.Include(a => a.User).Where(a => a.Active).ToList();
+
+                foreach (var host in hosts)
                 {
-                    var hosts = db.Hosts.Include(a => a.User).Where(a => a.Active).ToList();
+                    var alive = IsAlive(host);
 
-                    foreach (var host in hosts)
+                    var hostLog = new HostCheckLog
                     {
-                        var alive = IsAlive(host);
+                        HostID = host.ID,
+                        IsUp = alive
+                    };
 
-                        var hostLog = new HostCheckLog
+                    db.HostLog.Add(hostLog);
+                    db.SaveChanges();
+
+                    if (host.AlertsEnabled)
+                    {
+                        if (!alive)
                         {
-                            HostID = host.ID,
-                            IsUp = alive
-                        };
-
-                        db.HostLog.Add(hostLog);
-                        db.SaveChanges();
-
-                        if (host.AlertsEnabled)
+                            ProcessFailure(host);
+                        } else
                         {
-                            if (!alive)
-                            {
-                                ProcessFailure(host);
-                            } else
-                            {
-                                ProcessSuccess(host);
-                            }
+                            ProcessSuccess(host);
                         }
                     }
                 }
-                
-                Task.Delay(60000);
             }
         }
     }
