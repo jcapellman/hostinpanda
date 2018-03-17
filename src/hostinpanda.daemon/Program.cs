@@ -6,9 +6,9 @@
         {
             var mainService = new MainService();
 
-            mainService.Init();
+            mainService.Init(ConfigObject.Load("config.json"));
 
             mainService.Run();
         }
-    }   
+    }
 }
