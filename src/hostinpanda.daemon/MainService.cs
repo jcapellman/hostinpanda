@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -11,35 +12,49 @@ namespace hostinpanda.daemon
 {
     public class MainService
     {
-        public void Init()
+        private ConfigObject _config;
+
+        public void Init(ConfigObject config)
         {
+            _config = config;
         }
 
         private async Task<bool> IsAliveAsync(Hosts host)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                var response = await httpClient.GetAsync(new Uri(host.HostName));
+                using (var httpClient = new HttpClient())
+                {
+                    var response = await httpClient.GetAsync(host.HostName);
 
-                return response.IsSuccessStatusCode;
+                    return response.IsSuccessStatusCode;
+                }
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+
+                return false;
             }
         }
 
         private void SendEmail(string receiver, string host, string subject)
         {
-            using (var smtpClient = new SmtpClient())
+            using (var smtpClient = new SmtpClient(_config.SMTPHostName, _config.SMTPPort))
             {
-                MailMessage message = new MailMessage("no-reply@hostinpanda.com", receiver);
+                smtpClient.Credentials = new NetworkCredential(_config.SMTPUsername, _config.SMTPPassword);
 
-                message.Subject = subject;
-                
+                MailMessage message = new MailMessage("no-reply@hostinpanda.com", receiver)
+                {
+                    Subject = subject
+                };
+
                 smtpClient.Send(message);
             }
         }
 
         void ProcessSuccess(Hosts host)
         {
-            using (var db = new DALdbContext(null))
+            using (var db = new DALdbContext(_config.DatabaseConnectionString))
             {
                 var lastLog = db.HostLog.Where(a => a.HostID == host.ID && a.Active && a.IsUp).OrderByDescending(a => a.Created).FirstOrDefault();
 
@@ -56,7 +71,7 @@ namespace hostinpanda.daemon
 
         private void ProcessFailure(Hosts host)
         {
-            using (var db = new DALdbContext(null))
+            using (var db = new DALdbContext(_config.DatabaseConnectionString))
             {
                 var lastLog = db.HostLog.Where(a => a.HostID == host.ID && a.Active && a.IsUp).OrderByDescending(a => a.Created).FirstOrDefault();
 
@@ -75,7 +90,7 @@ namespace hostinpanda.daemon
         {
             while (true)
             {
-                using (var db = new DALdbContext(null))
+                using (var db = new DALdbContext(_config.DatabaseConnectionString))
                 {
                     var hosts = db.Hosts.Where(a => a.Active).ToList();
 
