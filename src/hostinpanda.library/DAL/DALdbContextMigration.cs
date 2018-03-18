@@ -8,7 +8,7 @@ namespace hostinpanda.library.DAL
         public DALdbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DALdbContext>();
-            optionsBuilder.UseSqlServer("Server=localhost;Database=hostinpanda;user id=sa;password=jc43v3R!");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=hostinpanda;user id=sa;password=hostinpanda");
 
             return new DALdbContext(optionsBuilder.Options);
         }

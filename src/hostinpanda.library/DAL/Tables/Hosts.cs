@@ -14,5 +14,9 @@ namespace hostinpanda.library.DAL.Tables
         public Users User { get; set; }
 
         public int UserID { get; set; }
+
+        public int PortNumber { get; set; }
+
+        public int AllowableDowntimeMinutes { get; set; }
     }
 }
