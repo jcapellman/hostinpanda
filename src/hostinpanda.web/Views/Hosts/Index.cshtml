@@ -25,7 +25,12 @@
             <td>@item.HostAddress</td>
             <td>@item.Alive</td>
             <td>@item.LastPingBack</td>
-            <td>edit | <a href="/Hosts/Delete?id=@item.ID" class="btn btn-danger">delete</a></td>
+            <td>
+                <div class="btn-group">
+                    <a href="/Hosts/Edit/@item.ID" class="btn btn-success">edit</a>
+                    <a href="/Hosts/Delete/@item.ID" class="btn btn-danger">delete</a>
+                </div>
+            </td>
         </tr>
     }
     </tbody>

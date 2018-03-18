@@ -13,7 +13,32 @@ namespace hostinpanda.web.Controllers
         public HostsController(DALdbContext dbContext) : base(dbContext)
         {
         }
-        
+
+        public ActionResult Edit(int id)
+        {
+            var hostResponse = new HostManager(Wrapper).GetHost(id);
+
+            if (hostResponse.HasError)
+            {
+                return ErrorView(hostResponse.ErrorString);
+            }
+
+            var model = new EditHostModel
+            {
+                ID = hostResponse.ObjectValue.ID,
+                HostName = hostResponse.ObjectValue.HostName
+            };
+
+            return View("Edit", model);
+        }
+
+        public ActionResult UpdateHost(EditHostModel model)
+        {
+            var response = new HostManager(Wrapper).UpdateHost(model.ID, model.HostName);
+
+            return response.HasError ? ErrorView(response.ErrorString) : Index();
+        }
+
         public ActionResult CreateHost(NewHostModel model)
         {
             var response = new HostManager(Wrapper).AddHost(model);

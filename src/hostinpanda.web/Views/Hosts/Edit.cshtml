@@ -1,0 +1,20 @@
+﻿@model hostinpanda.web.Models.EditHostModel
+
+@{
+    ViewData["Title"] = "edit host";
+}
+
+<h2>edit host</h2>
+
+<form asp-action="UpdateHost" method="post">
+    @Html.HiddenFor(a => a.ID)
+
+    <input class="form-control" type="text" placeholder="hostname" asp-for="@Model.HostName" />
+
+    <div class="text-center" style="margin-top: 10px">
+        <div class="btn-group">
+            <a href="/Hosts" class="btn btn-primary">back</a>
+            <button type="submit" class="btn btn-success">submit</button>
+        </div>
+    </div>
+</form>

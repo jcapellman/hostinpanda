@@ -30,6 +30,29 @@ namespace hostinpanda.web.Managers
             return new ReturnContainer<bool>(Wrapper.DbContext.SaveChanges() > 0);
         }
 
+        public ReturnContainer<bool> UpdateHost(int id, string hostName)
+        {
+            var host = Wrapper.DbContext.Hosts.FirstOrDefault(a => a.ID == id && a.UserID == Wrapper.CurrentUser.ID && a.Active);
+
+            if (host == null)
+            {
+                return new ReturnContainer<bool>(false, $"UpdateHost: Could not obtain {id}");
+            }
+
+            host.HostName = hostName;
+
+            Wrapper.DbContext.SaveChanges();
+
+            return new ReturnContainer<bool>(true);
+        }
+
+        public ReturnContainer<Hosts> GetHost(int id)
+        {
+            var host = Wrapper.DbContext.Hosts.FirstOrDefault(a => a.ID == id && a.UserID == Wrapper.CurrentUser.ID && a.Active);
+
+            return host == null ? new ReturnContainer<Hosts>(null, $"GetHost: Could not obtain {id}") : new ReturnContainer<Hosts>(host);
+        }
+
         public ReturnContainer<bool> RemoveHost(int id)
         {
             var host = Wrapper.DbContext.Hosts.FirstOrDefault(a => a.ID == id && a.UserID == Wrapper.CurrentUser.ID && a.Active);
