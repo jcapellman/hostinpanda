@@ -7,14 +7,20 @@
 <h2>add new host</h2>
 
 <form asp-action="CreateHost" method="post">
-    @Html.LabelFor(a => a.HostName)
-    <input class="form-control" type="text" placeholder="hostname" asp-for="HostName"/>
+    <div class="form-group">
+        @Html.LabelFor(a => a.HostName)
+        <input class="form-control" type="text" placeholder="hostname" asp-for="HostName"/>
+    </div>
 
-    @Html.LabelFor(a => a.AllowableDowntimeMinutes)
-    <input asp-for="AllowableDowntimeMinutes" class="form-control"/>
-
-    @Html.LabelFor(a => a.PortNumber)
-    <input asp-for="PortNumber" class="form-control"/>
+    <div class="form-group">
+        @Html.LabelFor(a => a.AllowableDowntimeMinutes)
+        <input asp-for="AllowableDowntimeMinutes" class="form-control" value="@Model.AllowableDowntimeMinutes"/>
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(a => a.PortNumber)
+        <input asp-for="PortNumber" class="form-control" value="@Model.PortNumber"/>
+    </div>
 
     <div class="text-center" style="margin-top: 10px">
         <div class="btn-group">

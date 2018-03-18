@@ -55,7 +55,7 @@ namespace hostinpanda.web.Controllers
             return deleteResponse.HasError ? ErrorView(deleteResponse.ErrorString) : Index();
         }
 
-        public ActionResult AddNew() => View();
+        public ActionResult AddNew() => View(new NewHostModel());
 
         public ActionResult Index()
         {

@@ -14,13 +14,11 @@ namespace hostinpanda.web.Models
         public string HostName { get; set; }
 
         [Display(Name = "Port #")]
-        [Required]        
-        [DataType(DataType.Text)]
+        [Required]                
         public int PortNumber { get; set; } = Constants.DEFAULT_PORT_NUMBER;
 
         [Display(Name = "Allowable Downtime (Minutes)")]
-        [Required]        
-        [DataType(DataType.Text)]
+        [Required]                
         public int AllowableDowntimeMinutes { get; set; } = Constants.DEFAULT_ALLOWED_DOWNTIME_MINUTES;
     }
 }
