@@ -22,7 +22,9 @@ namespace hostinpanda.web.Managers
             {
                 AlertsEnabled = true,
                 HostName = model.HostName,
-                UserID = Wrapper.CurrentUser.ID.Value
+                UserID = Wrapper.CurrentUser.ID.Value,
+                AllowableDowntimeMinutes = model.AllowableDowntimeMinutes,
+                PortNumber = model.PortNumber
             };
 
             Wrapper.DbContext.Hosts.Add(host);
@@ -30,7 +32,7 @@ namespace hostinpanda.web.Managers
             return new ReturnContainer<bool>(Wrapper.DbContext.SaveChanges() > 0);
         }
 
-        public ReturnContainer<bool> UpdateHost(int id, string hostName)
+        public ReturnContainer<bool> UpdateHost(int id, string hostName, int portNumber, int allowableDowntimeMinutes)
         {
             var host = Wrapper.DbContext.Hosts.FirstOrDefault(a => a.ID == id && a.UserID == Wrapper.CurrentUser.ID && a.Active);
 
@@ -40,6 +42,8 @@ namespace hostinpanda.web.Managers
             }
 
             host.HostName = hostName;
+            host.PortNumber = portNumber;
+            host.AllowableDowntimeMinutes = allowableDowntimeMinutes;
 
             Wrapper.DbContext.SaveChanges();
 
@@ -75,6 +79,7 @@ namespace hostinpanda.web.Managers
             return new ReturnContainer<List<HostListingResponseItem>>(hostsResult.Select(a => new HostListingResponseItem
             {
                 ID = a.ID,
+                PortNumber = a.PortNumber,
                 Alive = a.Active,
                 HostAddress = a.HostName,
                 LastPingBack = DateTime.Now

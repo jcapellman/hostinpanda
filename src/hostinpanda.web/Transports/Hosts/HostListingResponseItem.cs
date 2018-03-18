@@ -10,6 +10,9 @@ namespace hostinpanda.web.Transports.Hosts
         public int ID { get; set; }
 
         [DataMember]
+        public int PortNumber { get; set; }
+
+        [DataMember]
         public string HostAddress { get; set; }
 
         [DataMember]

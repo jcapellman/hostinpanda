@@ -1,9 +1,15 @@
-﻿namespace hostinpanda.web.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace hostinpanda.web.Models
 {
     public class RegisterModel
     {
+        [Required]
+        [DataType(DataType.EmailAddress)]
         public string Username { get; set; }
 
+        [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         public string ErrorMessage { get; set; }

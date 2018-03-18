@@ -7,9 +7,18 @@
 <h2>edit host</h2>
 
 <form asp-action="UpdateHost" method="post">
-    @Html.HiddenFor(a => a.ID)
+    <div class="form-group">        
+        @Html.HiddenFor(a => a.ID)
 
-    <input class="form-control" type="text" placeholder="hostname" asp-for="@Model.HostName" />
+        @Html.LabelFor(a => a.HostName)
+        <input class="form-control" type="text" placeholder="hostname" asp-for="@Model.HostName"/>
+
+        @Html.LabelFor(a => a.AllowableDowntimeMinutes)
+        <input asp-for="AllowableDowntimeMinutes" class="form-control"/>
+
+        @Html.LabelFor(a => a.PortNumber)
+        <input asp-for="PortNumber" class="form-control"/>
+    </div>
 
     <div class="text-center" style="margin-top: 10px">
         <div class="btn-group">

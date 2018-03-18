@@ -26,7 +26,9 @@ namespace hostinpanda.web.Controllers
             var model = new EditHostModel
             {
                 ID = hostResponse.ObjectValue.ID,
-                HostName = hostResponse.ObjectValue.HostName
+                HostName = hostResponse.ObjectValue.HostName,
+                PortNumber = hostResponse.ObjectValue.PortNumber,
+                AllowableDowntimeMinutes = hostResponse.ObjectValue.AllowableDowntimeMinutes
             };
 
             return View("Edit", model);
@@ -34,7 +36,7 @@ namespace hostinpanda.web.Controllers
 
         public ActionResult UpdateHost(EditHostModel model)
         {
-            var response = new HostManager(Wrapper).UpdateHost(model.ID, model.HostName);
+            var response = new HostManager(Wrapper).UpdateHost(model.ID, model.HostName, model.PortNumber, model.AllowableDowntimeMinutes);
 
             return response.HasError ? ErrorView(response.ErrorString) : Index();
         }
@@ -43,12 +45,7 @@ namespace hostinpanda.web.Controllers
         {
             var response = new HostManager(Wrapper).AddHost(model);
 
-            if (response.HasError)
-            {
-                return ErrorView(response.ErrorString);
-            }
-
-            return Index();
+            return response.HasError ? ErrorView(response.ErrorString) : Index();
         }
 
         public ActionResult Delete(int id)

@@ -11,7 +11,8 @@
 <table class="table">
     <thead>
         <tr>
-            <th>ip address</th>
+            <th>host</th>
+            <th>port number</th>
             <th>alive</th>
             <th>last ping back</th>
             <th>actions</th>
@@ -23,8 +24,10 @@
     {
         <tr>
             <td>@item.HostAddress</td>
+            <td>@item.PortNumber</td>
             <td>@item.Alive</td>
             <td>@item.LastPingBack</td>
+            
             <td>
                 <div class="btn-group">
                     <a href="/Hosts/Edit/@item.ID" class="btn btn-success">edit</a>

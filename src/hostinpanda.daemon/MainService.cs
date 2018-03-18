@@ -16,8 +16,6 @@ namespace hostinpanda.daemon
     {
         private ConfigObject _config;
 
-        private const int ACCEPTABLE_DOWNTIME_MINUTES = 5;
-
         public void Init(ConfigObject config)
         {
             _config = config;
@@ -31,7 +29,7 @@ namespace hostinpanda.daemon
                 {
                     using (var tcpClient = new TcpClient())
                     {
-                        tcpClient.Connect(host.HostName, 443);
+                        tcpClient.Connect(host.HostName, host.PortNumber);
                         return true;
                     }
                 }
@@ -82,7 +80,7 @@ namespace hostinpanda.daemon
 
                 lastUp = lastLog.Modified.DateTime;
                 
-                if (DateTime.Now.Subtract(lastUp).TotalMinutes < ACCEPTABLE_DOWNTIME_MINUTES)
+                if (DateTime.Now.Subtract(lastUp).TotalMinutes < host.AllowableDowntimeMinutes)
                 {
                     return;
                 }
