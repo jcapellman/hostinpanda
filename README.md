@@ -8,10 +8,10 @@ A web app + platform to assist a person with a single web site or multiple to pr
 ### Completed Features
 - Authentication
 - Service Structure
-
-### Todo Features
 - Configurable Amount of Downtime
 - Ability to Edit/Delete Hosts
 - Configure the port to monitor
+
+### Todo Features
 - Configure TCP or UDP ports
 - Configure allowable time to wait for response
