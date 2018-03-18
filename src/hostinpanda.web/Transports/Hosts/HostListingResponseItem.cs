@@ -7,6 +7,9 @@ namespace hostinpanda.web.Transports.Hosts
     public class HostListingResponseItem
     {
         [DataMember]
+        public int ID { get; set; }
+
+        [DataMember]
         public string HostAddress { get; set; }
 
         [DataMember]

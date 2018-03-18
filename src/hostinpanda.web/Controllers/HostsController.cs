@@ -26,6 +26,13 @@ namespace hostinpanda.web.Controllers
             return Index();
         }
 
+        public ActionResult Delete(int id)
+        {
+            var deleteResponse = new HostManager(Wrapper).RemoveHost(id);
+
+            return deleteResponse.HasError ? ErrorView(deleteResponse.ErrorString) : Index();
+        }
+
         public ActionResult AddNew() => View();
 
         public ActionResult Index()

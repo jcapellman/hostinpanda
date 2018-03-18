@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using hostinpanda.library.Common;
 using hostinpanda.web.Common;
 using hostinpanda.library.DAL.Tables;
@@ -29,12 +30,28 @@ namespace hostinpanda.web.Managers
             return new ReturnContainer<bool>(Wrapper.DbContext.SaveChanges() > 0);
         }
 
+        public ReturnContainer<bool> RemoveHost(int id)
+        {
+            var host = Wrapper.DbContext.Hosts.FirstOrDefault(a => a.ID == id && a.UserID == Wrapper.CurrentUser.ID && a.Active);
+
+            if (host == null)
+            {
+                return new ReturnContainer<bool>(false, $"RemoveHost: Could not obtain {id} to remove");
+            }
+
+            Wrapper.DbContext.Hosts.Remove(host);
+            Wrapper.DbContext.SaveChanges();
+
+            return new ReturnContainer<bool>(true);
+        }
+
         public ReturnContainer<List<HostListingResponseItem>> GetHostListing()
         {
             var hostsResult = Wrapper.DbContext.Hosts.Where(a => a.UserID == Wrapper.CurrentUser.ID.Value).ToList();
                 
             return new ReturnContainer<List<HostListingResponseItem>>(hostsResult.Select(a => new HostListingResponseItem
             {
+                ID = a.ID,
                 Alive = a.Active,
                 HostAddress = a.HostName,
                 LastPingBack = DateTime.Now
