@@ -1,4 +1,6 @@
-﻿@{
+﻿@model string
+
+@{
     ViewData["Title"] = "Error";
 }
 
@@ -6,4 +8,8 @@
     <img src="~/images/error_panda.png" alt="error panda" class="img-responsive img-rounded splash" />
 
     <h2 class="text-danger text-center">Woah there, something went wrong, but don't worry our panda team is on it.</h2>
+
+    <p>
+        @Model
+    </p>
 </div>

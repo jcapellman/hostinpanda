@@ -22,7 +22,7 @@ namespace hostinpanda.web.Controllers
         
         public ActionResult ErrorView(string content)
         {
-            return View("Error", "Home");
+            return RedirectToAction("Error", "Home", content);
         }
     }
 }
