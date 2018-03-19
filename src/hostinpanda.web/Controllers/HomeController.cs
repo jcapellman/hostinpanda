@@ -4,8 +4,15 @@ namespace hostinpanda.web.Controllers
 {
     public class HomeController : BaseController
     {
-        public IActionResult Index() => View();
+        public IActionResult Index() {
+            if (Wrapper.CurrentUser?.ID != null)
+            {
+                return RedirectToAction("Index", "Hosts");
+            }
 
-        public IActionResult Error() => View();
+            return View("Index");
+        }
+
+        public IActionResult Error(string errorString) => View("Error", errorString);
     }
 }
