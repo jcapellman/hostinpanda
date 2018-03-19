@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using hostinpanda.library.Common;
 using hostinpanda.web.Common;
 using hostinpanda.library.DAL.Tables;
@@ -41,7 +42,8 @@ namespace hostinpanda.web.Managers
             var user = new Users
             {
                 Username = username,
-                Password = HashString(password)
+                Password = HashString(password),
+                Active = true
             };
 
             await Wrapper.DbContext.Users.AddAsync(user);
