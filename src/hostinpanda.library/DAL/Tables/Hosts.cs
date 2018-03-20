@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using hostinpanda.library.Enums;
+
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace hostinpanda.library.DAL.Tables
@@ -18,5 +20,7 @@ namespace hostinpanda.library.DAL.Tables
         public int PortNumber { get; set; }
 
         public int AllowableDowntimeMinutes { get; set; }
+
+        public PortType PortType { get; set; }
     }
 }

@@ -12,9 +12,10 @@ using System;
 namespace hostinpanda.library.Migrations
 {
     [DbContext(typeof(DALdbContext))]
-    partial class DALdbContextModelSnapshot : ModelSnapshot
+    [Migration("20180320004647_Added PortType")]
+    partial class AddedPortType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

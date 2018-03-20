@@ -1,4 +1,5 @@
 ﻿@model hostinpanda.web.Models.EditHostModel
+@using hostinpanda.library.Enums
 
 @{
     ViewData["Title"] = "edit host";
@@ -6,22 +7,27 @@
 
 <h2>edit host</h2>
 
-<form asp-action="UpdateHost" method="post">    
+<form asp-action="UpdateHost" method="post">
     @Html.HiddenFor(a => a.ID)
-    
-    <div class="form-group">        
+
+    <div class="form-group">
         @Html.LabelFor(a => a.HostName)
-        <input class="form-control" type="text" placeholder="hostname" asp-for="HostName"/>
+        <input class="form-control" type="text" placeholder="hostname" asp-for="HostName" />
     </div>
-    
+
     <div class="form-group">
         @Html.LabelFor(a => a.AllowableDowntimeMinutes)
-        <input asp-for="AllowableDowntimeMinutes" class="form-control"/>
+        <input asp-for="AllowableDowntimeMinutes" class="form-control" />
     </div>
-    
+
     <div class="form-group">
-    @Html.LabelFor(a => a.PortNumber)
-        <input asp-for="PortNumber" class="form-control"/>
+        @Html.LabelFor(a => a.PortNumber)
+        <input asp-for="PortNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(a => a.PortType)
+        <select asp-for="PortType" asp-items="Html.GetEnumSelectList<PortType>()" class="form-control"></select>
     </div>
 
     <div class="text-center" style="margin-top: 10px">

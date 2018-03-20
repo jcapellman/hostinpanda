@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 
 using hostinpanda.library.DAL;
 using hostinpanda.library.DAL.Tables;
@@ -27,10 +26,20 @@ namespace hostinpanda.daemon
             {
                 try
                 {
-                    using (var tcpClient = new TcpClient())
+                    if (host.PortType == library.Enums.PortType.TCP)
                     {
-                        tcpClient.Connect(host.HostName, host.PortNumber);
-                        return true;
+                        using (var tcpClient = new TcpClient())
+                        {
+                            tcpClient.Connect(host.HostName, host.PortNumber);
+                            return true;
+                        }
+                    } else
+                    {
+                        using (var udpClient = new UdpClient())
+                        {
+                            udpClient.Connect(host.HostName, host.PortNumber);
+                            return true;
+                        }
                     }
                 }
                 catch (SocketException ex)

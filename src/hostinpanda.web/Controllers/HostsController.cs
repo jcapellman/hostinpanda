@@ -28,7 +28,8 @@ namespace hostinpanda.web.Controllers
                 ID = hostResponse.ObjectValue.ID,
                 HostName = hostResponse.ObjectValue.HostName,
                 PortNumber = hostResponse.ObjectValue.PortNumber,
-                AllowableDowntimeMinutes = hostResponse.ObjectValue.AllowableDowntimeMinutes
+                AllowableDowntimeMinutes = hostResponse.ObjectValue.AllowableDowntimeMinutes,
+                PortType = hostResponse.ObjectValue.PortType
             };
 
             return View("Edit", model);
@@ -36,7 +37,7 @@ namespace hostinpanda.web.Controllers
 
         public ActionResult UpdateHost(EditHostModel model)
         {
-            var response = new HostManager(Wrapper).UpdateHost(model.ID, model.HostName, model.PortNumber, model.AllowableDowntimeMinutes);
+            var response = new HostManager(Wrapper).UpdateHost(model.ID, model.HostName, model.PortNumber, model.AllowableDowntimeMinutes, model.PortType);
 
             return response.HasError ? ErrorView(response.ErrorString) : Index();
         }

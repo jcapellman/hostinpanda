@@ -1,5 +1,7 @@
 ﻿@model hostinpanda.web.Models.NewHostModel
 
+@using hostinpanda.library.Enums;
+
 @{
     ViewData["Title"] = "add new host";
 }
@@ -20,6 +22,12 @@
     <div class="form-group">
         @Html.LabelFor(a => a.PortNumber)
         <input asp-for="PortNumber" class="form-control" value="@Model.PortNumber"/>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(a => a.PortType)
+        <select asp-for="PortType" asp-items="Html.GetEnumSelectList<PortType>()" class="form-control">
+        </select>
     </div>
 
     <div class="text-center" style="margin-top: 10px">

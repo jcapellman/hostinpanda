@@ -7,6 +7,7 @@ using hostinpanda.web.Common;
 using hostinpanda.library.DAL.Tables;
 using hostinpanda.web.Models;
 using hostinpanda.web.Transports.Hosts;
+using hostinpanda.library.Enums;
 
 namespace hostinpanda.web.Managers
 {
@@ -24,7 +25,8 @@ namespace hostinpanda.web.Managers
                 HostName = model.HostName,
                 UserID = Wrapper.CurrentUser.ID.Value,
                 AllowableDowntimeMinutes = model.AllowableDowntimeMinutes,
-                PortNumber = model.PortNumber
+                PortNumber = model.PortNumber,
+                PortType = model.PortType
             };
 
             Wrapper.DbContext.Hosts.Add(host);
@@ -32,7 +34,7 @@ namespace hostinpanda.web.Managers
             return new ReturnContainer<bool>(Wrapper.DbContext.SaveChanges() > 0);
         }
 
-        public ReturnContainer<bool> UpdateHost(int id, string hostName, int portNumber, int allowableDowntimeMinutes)
+        public ReturnContainer<bool> UpdateHost(int id, string hostName, int portNumber, int allowableDowntimeMinutes, PortType portType)
         {
             var host = Wrapper.DbContext.Hosts.FirstOrDefault(a => a.ID == id && a.UserID == Wrapper.CurrentUser.ID && a.Active);
 
@@ -44,6 +46,7 @@ namespace hostinpanda.web.Managers
             host.HostName = hostName;
             host.PortNumber = portNumber;
             host.AllowableDowntimeMinutes = allowableDowntimeMinutes;
+            host.PortType = portType;
 
             Wrapper.DbContext.SaveChanges();
 
