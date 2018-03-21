@@ -32,25 +32,31 @@ namespace hostinpanda.web.Managers
             }
         }
 
-        public async Task<ReturnContainer<int>> CreateUser(string username, string password)
+        public async Task<ReturnContainer<int?>> CreateUser(string username, string password)
         {
-            if (Wrapper.DbContext.Users.Any(a => a.Username == username && a.Active))
+            try
             {
-                throw new Exception("User already exists");
+                if (Wrapper.DbContext.Users.Any(a => a.Username == username && a.Active))
+                {
+                    throw new Exception("User already exists");
+                }
+
+                var user = new Users
+                {
+                    Username = username,
+                    Password = HashString(password),
+                    Active = true
+                };
+
+                await Wrapper.DbContext.Users.AddAsync(user);
+
+                await Wrapper.DbContext.SaveChangesAsync();
+
+                return new ReturnContainer<int?>(user.ID);
+            } catch (Exception ex)
+            {
+                return new ReturnContainer<int?>(null, ex.ToString());
             }
-
-            var user = new Users
-            {
-                Username = username,
-                Password = HashString(password),
-                Active = true
-            };
-
-            await Wrapper.DbContext.Users.AddAsync(user);
-
-            await Wrapper.DbContext.SaveChangesAsync();
-
-            return new ReturnContainer<int>(user.ID);         
         }
     }
 }

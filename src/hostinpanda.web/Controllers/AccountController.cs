@@ -64,9 +64,9 @@ namespace hostinpanda.web.Controllers
         {
             var result = await new UserManager(Wrapper).CreateUser(model.Username, model.Password);
 
-            if (!result.HasError)
+            if (!result.HasError && result.ObjectValue.HasValue)
             {
-                LoginUser(result.ObjectValue);
+                LoginUser(result.ObjectValue.Value);
 
                 return RedirectToAction("Index", "Hosts");
             }
