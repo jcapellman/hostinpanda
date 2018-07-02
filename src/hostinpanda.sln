@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hostinpanda.web", "hostinpanda.web\hostinpanda.web.csproj", "{6C76237C-0089-4C4F-A5FD-E15C275786B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hostinpanda.daemon", "hostinpanda.daemon\hostinpanda.daemon.csproj", "{0F2B163F-CC00-4766-895E-24D207EC3327}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hostinpanda.daemon", "hostinpanda.daemon\hostinpanda.daemon.csproj", "{0F2B163F-CC00-4766-895E-24D207EC3327}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hostinpanda.library", "hostinpanda.library\hostinpanda.library.csproj", "{9118B3CE-1F7C-4894-9BA6-A49FE02EFF67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hostinpanda.library", "hostinpanda.library\hostinpanda.library.csproj", "{9118B3CE-1F7C-4894-9BA6-A49FE02EFF67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
